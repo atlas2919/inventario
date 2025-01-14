@@ -125,3 +125,7 @@ a:hover {
         padding: 10px;
     }
 }
+
+.input-group#remember-me-group {
+    display: none; /* Oculta el bloque del checkbox */
+}
