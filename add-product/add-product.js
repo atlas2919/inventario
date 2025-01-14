@@ -10,14 +10,17 @@ const form = document.getElementById("add-product-form");
 form.addEventListener("submit", async (e) => {
     e.preventDefault(); // Evitar el envío predeterminado del formulario
 
+    const purchaseDateInput = document.getElementById("purchase-date").value; // Obtener fecha "YYYY-MM-DD"
+    const purchaseDate = purchaseDateInput ? getLocalMidnight(purchaseDateInput) : null; // Ajuste a medianoche local
+
     const productData = {
         name: document.getElementById("product-name").value.trim(),
         image: document.getElementById("product-image").value.trim(),
         purchasePrice: getValidatedDecimal(document.getElementById("purchase-price").value),
         salePrice: getValidatedDecimal(document.getElementById("sale-price").value),
         stock: getValidatedInteger(document.getElementById("stock").value),
-        // Capturar la fecha de compra
-        purchaseDate: document.getElementById("purchase-date").value ? new Date(document.getElementById("purchase-date").value) : null
+        // Fecha ajustada correctamente
+        purchaseDate: purchaseDate
     };
 
     console.log("Datos del producto a enviar:", productData); // Verifica los datos antes de enviar
@@ -33,6 +36,13 @@ form.addEventListener("submit", async (e) => {
         showToast("❌ Error al agregar producto: " + error.message, "error");
     }
 });
+
+// Función para convertir la fecha "YYYY-MM-DD" a medianoche local
+function getLocalMidnight(dateInput) {
+    const date = new Date(dateInput + "T00:00:00"); // Convertir a fecha con medianoche local
+    date.setMinutes(date.getMinutes() + date.getTimezoneOffset()); // Ajuste para compensar diferencia de UTC
+    return date;
+}
 
 // Función para validar y convertir valores decimales
 function getValidatedDecimal(value) {
@@ -64,5 +74,5 @@ function showToast(message, type) {
 
     setTimeout(() => {
         document.body.removeChild(toast); // Quita el mensaje después de 3 segundos
-    }, 3000);
+    }, 2000);
 }
