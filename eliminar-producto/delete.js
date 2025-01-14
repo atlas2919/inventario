@@ -1,6 +1,9 @@
 import { db } from "../../firebase-config.js";
 import { collection, getDocs, updateDoc, doc } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js";
 
+import { protectRoute } from "../auth.js"; // Importar la función de autenticación
+protectRoute(); // Verificar autenticación antes de cargar la página
+
 document.addEventListener("DOMContentLoaded", async () => {
     const productList = document.getElementById("product-list");
     const deleteModal = document.getElementById("delete-modal");
@@ -27,6 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <img src="${product.image}" alt="${product.name}">
                 <h3>${product.name}</h3>
                 <p>Precio de Compra: $${product.purchasePrice.toFixed(2)}</p>
+                <p>Fecha de Compra: ${product.purchaseDate ? new Date(product.purchaseDate.seconds * 1000).toLocaleDateString("es-EC") : "Sin fecha"}</p>
                 ${stockText}
                 <button class="btn-delete">Eliminar</button>
             `;

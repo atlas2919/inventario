@@ -14,23 +14,26 @@
             <form id="add-product-form">
                 <label for="product-name">Nombre del Producto</label>
                 <input type="text" id="product-name" required>
-
+            
                 <label for="product-image">URL de Imagen</label>
                 <input type="url" id="product-image" required>
-
+            
                 <label for="purchase-price">Precio de Compra</label>
                 <input type="number" id="purchase-price" step="0.01" required>
-
+            
                 <label for="sale-price">Precio de Venta</label>
                 <input type="number" id="sale-price" step="0.01" required>
-
+            
                 <label for="stock">Cantidad en Stock</label>
                 <input type="number" id="stock" required>
-
+            
+                <!-- Nuevo campo para la fecha de compra -->
+                <label for="purchase-date">Fecha de Compra</label>
+                <input type="date" id="purchase-date" required>
+            
                 <button type="submit" class="btn">Guardar Producto</button>
-                <!-- Cambiado el type a "button" para evitar validación del formulario -->
                 <button type="button" class="btn btn-home" id="home-btn">Home</button>
-            </form>
+            </form>            
         </div>
     </div>
 
@@ -44,4 +47,3 @@
     </script>
 </body>
 </html>
-

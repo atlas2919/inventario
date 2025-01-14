@@ -1,8 +1,6 @@
-// Importa Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, setPersistence, browserLocalPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-auth.js";
 
-// Configuración de Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyCtLalPGNO5VfRwN-Jc46s-TIoCLvWRtlc",
     authDomain: "inventario-page.firebaseapp.com",
@@ -12,23 +10,31 @@ const firebaseConfig = {
     appId: "1:246666275516:web:22af44c7ee2ad315e1feb9"
 };
 
-// Inicializar Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Manejar el formulario de inicio de sesión
 const loginForm = document.getElementById('login-form');
+const rememberMeCheckbox = document.getElementById('remember-me');
 const errorMessage = document.getElementById('error-message');
 
 loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+    const rememberMe = rememberMeCheckbox.checked;
 
     try {
+        if (rememberMe) {
+            await setPersistence(auth, browserLocalPersistence); // Persistencia local
+        } else {
+            await setPersistence(auth, browserSessionPersistence); // Persistencia de sesión
+        }
+
         await signInWithEmailAndPassword(auth, email, password);
-        window.location.href = "../home/index.html";  // Redirige a la página principal de inventario
+        console.log("Inicio de sesión exitoso.");
+        window.location.href = "../home/index.html";
     } catch (error) {
+        console.error("Error de inicio de sesión:", error.message);
         errorMessage.textContent = "Error: " + error.message;
     }
 });

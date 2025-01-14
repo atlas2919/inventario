@@ -1,6 +1,9 @@
 import { db } from "../firebase-config.js";
 import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js";
 
+import { protectRoute } from "../auth.js"; // Importar la función de autenticación
+protectRoute(); // Verificar autenticación antes de cargar la página
+
 const form = document.getElementById("add-product-form");
 
 // Manejo del formulario
@@ -12,18 +15,19 @@ form.addEventListener("submit", async (e) => {
         image: document.getElementById("product-image").value.trim(),
         purchasePrice: getValidatedDecimal(document.getElementById("purchase-price").value),
         salePrice: getValidatedDecimal(document.getElementById("sale-price").value),
-        stock: getValidatedInteger(document.getElementById("stock").value)
+        stock: getValidatedInteger(document.getElementById("stock").value),
+        // Capturar la fecha de compra
+        purchaseDate: document.getElementById("purchase-date").value ? new Date(document.getElementById("purchase-date").value) : null
     };
 
     console.log("Datos del producto a enviar:", productData); // Verifica los datos antes de enviar
 
     try {
-        // Guardar en Firebase Firestore
-        await addDoc(collection(db, "productos"), productData);
+        await addDoc(collection(db, "productos"), productData); // Guardar en Firestore
         showToast("✅ Producto agregado con éxito", "success");
         setTimeout(() => {
             window.location.href = "../home/index.html"; // Redirige después de mostrar el mensaje
-        }, 2000);
+        }, 1000);
     } catch (error) {
         console.error("Error al agregar producto:", error);
         showToast("❌ Error al agregar producto: " + error.message, "error");

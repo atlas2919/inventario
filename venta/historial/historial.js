@@ -1,6 +1,9 @@
 import { db } from "../../firebase-config.js";
 import { collection, query, where, getDocs, Timestamp, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js";
 
+import { protectRoute } from "../../auth.js"; // Importar la función de autenticación
+protectRoute(); // Verificar autenticación antes de cargar la página
+
 document.addEventListener("DOMContentLoaded", () => {
     const filterBtn = document.getElementById("filter-btn");
     const dateInput = document.getElementById("filter-date");
@@ -36,10 +39,14 @@ document.addEventListener("DOMContentLoaded", () => {
             groupedSales[sale.productoId].push(sale);
         }
 
-        // Mostrar cada grupo de ventas
+        // Mostrar cada grupo de ventas con totales
         for (const productId in groupedSales) {
             const productDoc = await getDoc(doc(db, "productos", productId));
             const product = productDoc.exists() ? productDoc.data() : { name: "Producto eliminado", image: "default-image.png" };
+
+            // Calcular totales por producto
+            const totalCantidadVendida = groupedSales[productId].reduce((sum, sale) => sum + sale.cantidadVendida, 0);
+            const totalIngresos = groupedSales[productId].reduce((sum, sale) => sum + (sale.cantidadVendida * sale.precioVenta), 0);
 
             // Sección del producto
             const productSection = document.createElement("div");
@@ -48,6 +55,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="product-header">
                     <img src="${product.image}" alt="${product.name}" class="product-image">
                     <h3>${product.name}</h3>
+                </div>
+                <div class="product-summary">
+                    <p><strong>Total Cantidad Vendida:</strong> ${totalCantidadVendida} unidades</p>
+                    <p><strong>Total Ingresos:</strong> $${totalIngresos.toFixed(2)}</p>
                 </div>
             `;
 
@@ -61,6 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 saleItem.innerHTML = `
                     <p><strong>Cantidad Vendida:</strong> ${sale.cantidadVendida}</p>
                     <p><strong>Precio Venta:</strong> $${sale.precioVenta.toFixed(2)}</p>
+                    <p>Fecha de Compra: ${product.purchaseDate ? new Date(product.purchaseDate.seconds * 1000).toLocaleDateString("es-EC") : "Sin fecha"}</p>
                     <p><strong>Fecha de Venta:</strong> ${new Date(sale.fechaVentaTimestamp.seconds * 1000).toLocaleString("es-EC")}</p>
                 `;
                 salesList.appendChild(saleItem);
