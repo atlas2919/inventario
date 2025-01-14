@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar Producto</title>
+    <link rel="stylesheet" href="./style-delete.css">
+    <base href="/inventario/" />
+</head>
+<body>
+    <h1>Eliminar Producto</h1>
+    <div class="product-list" id="product-list">
+        <!-- Aquí se cargarán las cards de los productos -->
+    </div>
+
+    <div class="modal" id="delete-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Confirmar Eliminación</h2>
+                <button class="close-btn" id="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>¿Estás seguro de que deseas eliminar este producto de la vista? La información de ventas seguirá disponible.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="confirm-btn" id="confirm-delete-btn">Eliminar</button>
+                <button class="cancel-btn" id="cancel-delete-btn">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="buttons-container">
+        <button class="btn-blue" id="home-btn">Home</button>
+    </div>
+
+    <script type="module" src="./delete.js"></script>
+</body>
+</html>

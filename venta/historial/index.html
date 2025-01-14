@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Ventas</title>
+    <link rel="stylesheet" href="style.css">
+    <base href="/inventario/" />
+</head>
+<body>
+    <h1 style="text-align: center;">Historial de Ventas</h1>
+    <div class="filter-container">
+        <input type="date" id="filter-date">
+        <button id="filter-btn" class="btn btn-blue">Filtrar</button>
+    </div>
+    <div id="sales-history-container" class="history-container"></div>
+    <div class="buttons-container">
+        <button class="btn btn-blue" id="back-btn">Regresar</button>
+    </div>
+    <script type="module" src="historial.js"></script>
+</body>
+</html>

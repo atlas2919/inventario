@@ -1,0 +1,99 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Nunito', sans-serif;
+    background-color: #f8f9fa;
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 1rem 0;
+    color: #333;
+}
+
+.button-group-row {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+button {
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+.btn-green {
+    background-color: #4caf50; /* Verde */
+}
+
+.btn-blue {
+    background-color: #007bff; /* Azul */
+}
+
+.btn-red {
+    background-color: #f44336; /* Rojo */
+}
+
+.stock-warning {
+    color: red !important;
+    font-weight: bold;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+.inventory-list {
+    display: flex;
+    flex-wrap: wrap; /* Permitir que los elementos se ajusten a nuevas filas */
+    gap: 1rem; /* Espaciado entre tarjetas */
+    justify-content: flex-start; /* Para que comiencen desde la izquierda */
+    padding: 3rem;
+}
+
+.card {
+    background-color: white;
+    width: 280px; /* Tamaño constante */
+    height: 350px; /* Altura constante */
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.card img {
+    max-width: 100%;
+    max-height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.card h3 {
+    margin: 0.5rem 0 1rem;
+    font-weight: 600;
+}
+
+.card p {
+    margin: 0.3rem 0;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+@media (max-width: 768px) {
+    .inventory-list {
+        justify-content: center; /* Centra las tarjetas en pantallas más pequeñas */
+    }
+}
